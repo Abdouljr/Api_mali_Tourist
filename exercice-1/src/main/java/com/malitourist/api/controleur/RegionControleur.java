@@ -1,47 +1,47 @@
 package com.malitourist.api.controleur;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 
-import com.malitourist.api.modele.Pays;
 import com.malitourist.api.modele.Population;
 import com.malitourist.api.service.PaysService;
 import com.malitourist.api.service.PopulationService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.malitourist.api.modele.Region;
 import com.malitourist.api.service.RegionService;
 import lombok.AllArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/region")
 @AllArgsConstructor
+@CrossOrigin(origins = "*")
 @Api(value= "Bonjour", description= "Exemple d'api d'une application pour la gestion des Régions")
 public class RegionControleur {
 
 	@Autowired
 	private  RegionService regionService;
 	@Autowired
+	private PaysService paysService;
+	@Autowired
 	private  PopulationService populationService;
 	@ApiOperation(value= "Pour créer des Régions")
-	@PostMapping("/creer")
-	public Object creer(@RequestBody Region region) {
+	@PostMapping("/ajouter")
+	public Object creer(@RequestBody Region region){
 		 if(regionService.sss(region.getNom()) != null){
 			 return "Cette region existe déjà !";
 		 }else {
 			   return regionService.creer(region);
 		 }
-
 	}
+
+
+
 
 	@ApiOperation(value= "Pour afficher les Régions")
 	@GetMapping("/lire")
@@ -61,6 +61,11 @@ public class RegionControleur {
 	public String suprimer(@PathVariable Long id) {
 		regionService.suprimer(id);
 		return "Region supprime avec succée !";
+	}
+
+	@GetMapping("/{id}")
+	public Optional<Region> regionParSonId(@PathVariable Long id){
+		return regionService.regionParSonId(id);
 	}
 
 	@GetMapping("/afficherAvecPays")

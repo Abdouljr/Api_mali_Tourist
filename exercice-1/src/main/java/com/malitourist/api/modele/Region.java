@@ -2,17 +2,15 @@ package com.malitourist.api.modele;
 
 import javax.persistence.*;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
+import java.awt.*;
 import java.util.List;
 
 @Entity
-@Table(name="Region")
-@Getter
-@Setter
-@NoArgsConstructor
+@Data @AllArgsConstructor @NoArgsConstructor
 public class Region {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,10 +25,16 @@ public class Region {
 	private String superficie;
 	@Column(length = 50)
 	private String langueMajoritaire;
+	private String image;
+	@Lob
+	private String description;
 
-
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@ManyToOne
-	@JoinColumn(name = "pays_id")
+//	@JoinColumn(name = "pays_id")
 	private Pays pays;
+	@JsonIgnore
+	@OneToMany(mappedBy = "region")
+	List<Commentaire> commentaires;
 
 }

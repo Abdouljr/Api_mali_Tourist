@@ -7,19 +7,23 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/pays")
 @AllArgsConstructor
+@CrossOrigin(origins = "*")
 @Api(value= "Bonjour", description= "Exemple d'api d'une application Pour la Gestion des pays")
 public class PaysControleur {
     private final PaysService paysService;
 
     @ApiOperation(value= "Pour créer un pays !")
-    @PostMapping("/creer")
+    @PostMapping("/ajouter")
     public Object creer(@RequestBody Pays pays) {
         if(paysService.existePays(pays.getNom()) != null){
             return "Ce pays existe déjà !";
@@ -45,4 +49,10 @@ public class PaysControleur {
     public String supprimer(@PathVariable Long id){
         return paysService.supprimer(id);
     }
+
+    @PostMapping("/upload")
+	public void uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+		System.out.println("--------------------------  Bonjour " + file.getOriginalFilename() + " --------------------");
+		paysService.upload(file);
+	}
 }

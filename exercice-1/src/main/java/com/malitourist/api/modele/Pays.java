@@ -1,17 +1,12 @@
 package com.malitourist.api.modele;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 
 @Entity
-@Table(name="Pays")
-@Getter
-@Setter
-@NoArgsConstructor
+@Data@AllArgsConstructor@NoArgsConstructor
 public class Pays {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

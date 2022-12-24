@@ -1,11 +1,13 @@
 package com.malitourist.api.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import com.malitourist.api.modele.Region;
 
-import antlr.collections.List;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public interface RegionService {
@@ -20,5 +22,7 @@ public interface RegionService {
 
 	Iterable<Object[]> togetall();
 
+	Optional<Region> regionParSonId(Long id);
+	void upload(MultipartFile file) throws IOException;
 	Region sss(String nom);
 }

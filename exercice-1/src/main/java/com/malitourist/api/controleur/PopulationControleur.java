@@ -13,12 +13,13 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("/population")
 @AllArgsConstructor
+@CrossOrigin(origins = "*")
 @Api(value= "Bonjour", description= "Exemple d'api pour une application de Gestion de Population")
 public class PopulationControleur {
     @Autowired
     private PopulationService populationService;
 
-    @PostMapping("/creer")
+    @PostMapping("/ajouter")
     @ApiOperation(value= "Pour créer une population !")
     public Population creer(@RequestBody Population population) {
         return populationService.creer(population);

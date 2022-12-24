@@ -1,7 +1,8 @@
-package com.malitourist.api.service;
+package com.malitourist.api.serviceImplement;
 
 import com.malitourist.api.modele.Population;
 import com.malitourist.api.repository.PopulationRepository;
+import com.malitourist.api.service.PopulationService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.stereotype.Component;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 @Data
 @Component
 @AllArgsConstructor
-public class PopulationServiceImpl implements PopulationService{
+public class PopulationServiceImpl implements PopulationService {
     private final PopulationRepository populationRepository;
 
     @Override

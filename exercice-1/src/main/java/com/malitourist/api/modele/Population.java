@@ -1,19 +1,14 @@
 package com.malitourist.api.modele;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 import org.springframework.web.bind.annotation.Mapping;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@Table(name = "Population")
+@Data@AllArgsConstructor@NoArgsConstructor
 public class Population {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +18,7 @@ public class Population {
     @Column(length = 10)
     private String date;
 
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     @ManyToOne
     @JoinColumn(name = "region_id")
     private Region region;

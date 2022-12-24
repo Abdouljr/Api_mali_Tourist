@@ -1,17 +1,21 @@
-package com.malitourist.api.service;
+package com.malitourist.api.serviceImplement;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 
+import com.malitourist.api.service.RegionService;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import com.malitourist.api.modele.Region;
 import com.malitourist.api.repository.RegionRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 @Component
 @AllArgsConstructor
-public class RegionServiceImpl implements RegionService{
+public class RegionServiceImpl implements RegionService {
 	
 	private final RegionRepository regionRepository;
 	
@@ -47,6 +51,21 @@ public class RegionServiceImpl implements RegionService{
 	public Iterable<Object[]> togetall() {
 		return regionRepository.togetall();
 
+	}
+
+	@Override
+	public Optional<Region> regionParSonId(Long id) {
+		 Optional<Region> region = regionRepository.findById(id);
+		 if (region.isEmpty()){
+			 return Optional.empty();
+		 }else {
+			 return region;
+		 }
+	}
+
+	@Override
+	public void upload(MultipartFile file) throws IOException {
+		file.transferTo(new File("C:\\Users\\USER\\Desktop\\Ionic\\MaliTourist\\src\\assets\\"+file.getOriginalFilename()));
 	}
 
 	@Override
