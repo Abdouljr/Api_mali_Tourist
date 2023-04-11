@@ -24,5 +24,4 @@ public interface RegionService {
 
 	Optional<Region> regionParSonId(Long id);
 	void upload(MultipartFile file) throws IOException;
-	Region sss(String nom);
 }

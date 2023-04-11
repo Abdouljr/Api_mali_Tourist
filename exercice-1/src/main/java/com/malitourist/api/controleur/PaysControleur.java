@@ -39,9 +39,9 @@ public class PaysControleur {
     }
 
     @ApiOperation(value= "Pour modifier un pays")
-    @PutMapping("/modifier/{id}")
-    public Pays modifier(@PathVariable Long id, @RequestBody Pays pays){
-        return paysService.modifier(id, pays);
+    @PutMapping("/modifier")
+    public Pays modifier( @RequestBody Pays pays){
+        return paysService.modifier(pays.getId(), pays);
     }
 
     @ApiOperation(value= "Pour supprimer un pays")

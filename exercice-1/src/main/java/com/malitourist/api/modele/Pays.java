@@ -13,6 +13,8 @@ public class Pays {
     private long id;
     @Column(length = 50)
     private String nom;
+    @Lob
+    private String description;
 
 }
 

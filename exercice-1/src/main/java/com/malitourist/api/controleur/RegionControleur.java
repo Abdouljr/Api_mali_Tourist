@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import com.malitourist.api.modele.Population;
+import com.malitourist.api.repository.RegionRepository;
 import com.malitourist.api.service.PaysService;
 import com.malitourist.api.service.PopulationService;
 import io.swagger.annotations.Api;
@@ -30,11 +31,14 @@ public class RegionControleur {
 	private PaysService paysService;
 	@Autowired
 	private  PopulationService populationService;
+	private final RegionRepository regionRepository;
+
 	@ApiOperation(value= "Pour créer des Régions")
 	@PostMapping("/ajouter")
-	public Object creer(@RequestBody Region region){
-		 if(regionService.sss(region.getNom()) != null){
-			 return "Cette region existe déjà !";
+	public Region creer(@RequestBody Region region){
+		Region regionExiste = regionRepository.findByNom(region.getNom());
+		 if(regionExiste != null){
+			 throw new RuntimeException("Cette Region existe déjà !");
 		 }else {
 			   return regionService.creer(region);
 		 }
@@ -51,9 +55,9 @@ public class RegionControleur {
 	}
 
 	@ApiOperation(value= "Pour modifier une Région")
-	@PutMapping("/modifier/{id}") //Path variable
-	public  Region modifier(@PathVariable Long id, @RequestBody Region region) {
-		return regionService.modifier(id, region);
+	@PutMapping("/modifier") //Path variable
+	public  Region modifier(@RequestBody Region region) {
+		return regionService.modifier(region.getId(), region);
 	}
 
 	@ApiOperation(value= "Pour supprimer une Région")

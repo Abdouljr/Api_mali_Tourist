@@ -5,6 +5,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import com.malitourist.api.modele.LangueMajoritaire;
+import com.malitourist.api.modele.Pays;
+import com.malitourist.api.repository.LangueMajoritaireRepository;
+import com.malitourist.api.repository.PaysRepository;
 import com.malitourist.api.service.RegionService;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 public class RegionServiceImpl implements RegionService {
 	
 	private final RegionRepository regionRepository;
+	private final PaysRepository paysRepository;
+
+	private  final LangueMajoritaireRepository langueMajoritaireRepository;
 	
 	@Override
 	public Region creer(Region region) {
@@ -68,10 +75,6 @@ public class RegionServiceImpl implements RegionService {
 		file.transferTo(new File("C:\\Users\\USER\\Desktop\\Ionic\\MaliTourist\\src\\assets\\"+file.getOriginalFilename()));
 	}
 
-	@Override
-	public Region sss(String nom) {
-		return regionRepository.findByNom(nom);
-	}
 
 
 	@Override
@@ -84,6 +87,10 @@ public class RegionServiceImpl implements RegionService {
 					p.setDomaineAct(region.getDomaineAct());
 					p.setSuperficie(region.getSuperficie());
 					p.setLangueMajoritaire(region.getLangueMajoritaire());
+					Optional<Pays> pays = paysRepository.findById(region.getPays().getId());
+					pays.ifPresent(p::setPays);
+					Optional<LangueMajoritaire> langue = langueMajoritaireRepository.findById(region.getLangueMaj().getId());
+					langue.ifPresent(p::setLangueMaj);
 					return regionRepository.save(p);
 				}).orElseThrow(() -> new RuntimeException(" La Region n'existe pas !"));
 	}

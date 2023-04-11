@@ -33,12 +33,14 @@ public class PaysServiceImpl implements PaysService {
         return paysRepository.findById(id)
                 .map(p -> {
                     p.setNom(pays.getNom());
+                    p.setDescription(pays.getDescription());
                     return paysRepository.save(p);
                 } ).orElseThrow(()-> new RuntimeException("Ce pays n'existe pas !"));
     }
 
     @Override
     public String supprimer(Long id) {
+        paysRepository.findById(id).orElseThrow(()-> new RuntimeException("Ce pays n'existe pas !"));
         paysRepository.deleteById(id);
         return "Le pays a été supprimer avec succé !";
     }
