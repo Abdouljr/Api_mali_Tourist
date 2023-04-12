@@ -25,14 +25,18 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     @Autowired
     private RoleRepository roleRepository;
     @Override
-    public Utilisateur recuperUtilisateur(String utilisateur) {
-        return utilisateurRepository.findByUsername(utilisateur);
+    public Utilisateur recuperUtilisateur(String nomUtilisateur) {
+        Utilisateur utilisateur = utilisateurRepository.findByUsername(nomUtilisateur);
+        if(utilisateur == null){
+            throw new RuntimeException("Cet utilisateur n'existe pas !");
+        }
+        return utilisateur;
     }
 
     @Override
     public Utilisateur ajouterUtilisateur(Utilisateur utilisateur) {
-        String mdp = utilisateur.getPassword();
-        utilisateur.setPassword(passwordEncoder.encode(mdp));
+        String motDePasse = utilisateur.getPassword();
+        utilisateur.setPassword(passwordEncoder.encode(motDePasse));
         return utilisateurRepository.save(utilisateur);
     }
 
@@ -42,8 +46,8 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     }
 
     @Override
-    public Utilisateur modifierUtilisateur(Long id, Utilisateur utilisateur) {
-        return utilisateurRepository.findById(id).map(u -> {
+    public Utilisateur modifierUtilisateur(Utilisateur utilisateur) {
+        return utilisateurRepository.findById(utilisateur.getId()).map(u -> {
             u.setUsername(utilisateur.getUsername());
             u.setPassword(passwordEncoder.encode(utilisateur.getPassword()));
             u.setEmail(utilisateur.getEmail());
@@ -61,6 +65,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     @Override
     public void supprimerUtilisateur(Long id) {
+        utilisateurRepository.findById(id).orElseThrow(() -> new RuntimeException("Cet utilisateur n'existe pas !"));
         utilisateurRepository.deleteById(id);
     }
 }

@@ -36,9 +36,9 @@ public class UtilisateurControleur {
         return utilisateurService.afficherUtilisateur();
     };
 
-    @PutMapping("/modifier/{id}")
-    public Utilisateur modifierUtilisateur(@PathVariable Long id, @RequestBody Utilisateur utilisateur){
-        return utilisateurService.modifierUtilisateur(id, utilisateur);
+    @PutMapping("/modifier")
+    public Utilisateur modifierUtilisateur(@RequestBody Utilisateur utilisateur){
+        return utilisateurService.modifierUtilisateur(utilisateur);
     };
 
     @DeleteMapping("/supprimer/{id}")

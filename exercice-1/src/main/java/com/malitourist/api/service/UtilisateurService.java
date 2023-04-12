@@ -12,7 +12,7 @@ public interface UtilisateurService {
     Utilisateur recuperUtilisateur(String utilisateur);
     Utilisateur ajouterUtilisateur(Utilisateur utilisateur);
      List<Utilisateur> afficherUtilisateur();
-     Utilisateur modifierUtilisateur(Long id, Utilisateur utilisateur);
+     Utilisateur modifierUtilisateur(Utilisateur utilisateur);
 
     void ajouterRoleUtilisateur(String nomRole, String nomUtilisateur);
     void  supprimerUtilisateur(Long id);
