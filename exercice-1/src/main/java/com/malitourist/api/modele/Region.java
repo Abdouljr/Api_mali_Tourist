@@ -20,11 +20,7 @@ public class Region {
 	@Column(length = 10)
 	private String codeRegion;
 	@Column(length = 50)
-	private String domaineAct;
-	@Column(length = 50)
 	private String superficie;
-	@Column(length = 50)
-	private String langueMajoritaire;
 	private String image;
 	@Lob
 	private String description;
@@ -36,10 +32,11 @@ public class Region {
 	@OneToMany(mappedBy = "region")
 	List<Commentaire> commentaires;
 
+
 	@ManyToOne
-	private LangueMajoritaire langueMaj;
+	private DomaineAct domaineAct;
 
-
-
+	@ManyToOne
+	private LangueMajoritaire langueMajoritaire;
 
 }

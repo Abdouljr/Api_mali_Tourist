@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import com.malitourist.api.modele.DomaineAct;
 import com.malitourist.api.modele.LangueMajoritaire;
 import com.malitourist.api.modele.Pays;
+import com.malitourist.api.repository.DomaineActRepository;
 import com.malitourist.api.repository.LangueMajoritaireRepository;
 import com.malitourist.api.repository.PaysRepository;
 import com.malitourist.api.service.RegionService;
@@ -25,10 +27,17 @@ public class RegionServiceImpl implements RegionService {
 	private final PaysRepository paysRepository;
 
 	private  final LangueMajoritaireRepository langueMajoritaireRepository;
+
+	private final DomaineActRepository domaineActRepository;
 	
 	@Override
 	public Region creer(Region region) {
-
+		Optional<Pays> pays = paysRepository.findById(region.getPays().getId());
+		Optional<DomaineAct>  domaine = domaineActRepository.findById(region.getDomaineAct().getId());
+		Optional<LangueMajoritaire> langueMajoritaire = langueMajoritaireRepository.findById(region.getLangueMajoritaire().getId());
+		pays.ifPresent(region::setPays);
+		domaine.ifPresent(region::setDomaineAct);
+		langueMajoritaire.ifPresent(region::setLangueMajoritaire);
 		return regionRepository.save(region);
 	}
 
@@ -84,13 +93,19 @@ public class RegionServiceImpl implements RegionService {
 				.map(p ->{
 					p.setNom(region.getNom());
 					p.setCodeRegion(region.getCodeRegion());
-					p.setDomaineAct(region.getDomaineAct());
 					p.setSuperficie(region.getSuperficie());
-					p.setLangueMajoritaire(region.getLangueMajoritaire());
 					Optional<Pays> pays = paysRepository.findById(region.getPays().getId());
-					pays.ifPresent(p::setPays);
-					Optional<LangueMajoritaire> langue = langueMajoritaireRepository.findById(region.getLangueMaj().getId());
-					langue.ifPresent(p::setLangueMaj);
+					pays.ifPresentOrElse(p::setPays, () -> {
+						throw new RuntimeException(" Ce Pays n'existe pas !");
+					});
+					Optional<LangueMajoritaire> langue = langueMajoritaireRepository.findById(region.getLangueMajoritaire().getId());
+					langue.ifPresentOrElse(p::setLangueMajoritaire, () -> {
+						throw new RuntimeException(" Cette langue n'existe pas !");
+					});
+					Optional<DomaineAct> domaine = domaineActRepository.findById(region.getDomaineAct().getId());
+					domaine.ifPresentOrElse(p::setDomaineAct, () -> {
+						throw new RuntimeException(" Cette domaine d'activité n'existe pas !");
+					});
 					return regionRepository.save(p);
 				}).orElseThrow(() -> new RuntimeException(" La Region n'existe pas !"));
 	}
