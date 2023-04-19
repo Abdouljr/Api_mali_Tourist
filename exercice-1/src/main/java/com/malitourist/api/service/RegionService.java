@@ -2,6 +2,7 @@ package com.malitourist.api.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import com.malitourist.api.modele.Region;
@@ -16,9 +17,9 @@ public interface RegionService {
 	Region modifier (Long id, Region region);
 	String suprimer (Long id);
 
-	Iterable<Object[]> afficherSansPays();
+	List<Object[]> afficherSansPays();
 
-	Iterable<Object[]> afficherAvecPays();
+	List<Region> afficherAvecPays();
 
 	Iterable<Object[]> togetall();
 

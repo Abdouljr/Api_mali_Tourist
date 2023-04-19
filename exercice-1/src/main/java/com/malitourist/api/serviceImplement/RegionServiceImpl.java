@@ -3,6 +3,7 @@ package com.malitourist.api.serviceImplement;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import com.malitourist.api.modele.DomaineAct;
@@ -54,12 +55,12 @@ public class RegionServiceImpl implements RegionService {
 	}
 
 	@Override
-	public Iterable<Object[]> afficherSansPays() {
+	public List<Object[]> afficherSansPays() {
 		return regionRepository.sansPays();
 	}
 
 	@Override
-	public Iterable<Object[]> afficherAvecPays() {
+	public List<Region> afficherAvecPays() {
 		return regionRepository.avecPays();
 	}
 

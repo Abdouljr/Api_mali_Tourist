@@ -18,8 +18,8 @@ import java.util.Optional;
 @Component
 @AllArgsConstructor
 public class UtilisateurServiceImpl implements UtilisateurService {
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
     @Autowired
     private UtilisateurRepository utilisateurRepository;
     @Autowired
@@ -36,7 +36,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     @Override
     public Utilisateur ajouterUtilisateur(Utilisateur utilisateur) {
         String motDePasse = utilisateur.getPassword();
-        utilisateur.setPassword(passwordEncoder.encode(motDePasse));
+//        utilisateur.setPassword(passwordEncoder.encode(motDePasse));
         return utilisateurRepository.save(utilisateur);
     }
 
@@ -49,7 +49,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     public Utilisateur modifierUtilisateur(Utilisateur utilisateur) {
         return utilisateurRepository.findById(utilisateur.getId()).map(u -> {
             u.setUsername(utilisateur.getUsername());
-            u.setPassword(passwordEncoder.encode(utilisateur.getPassword()));
+//            u.setPassword(passwordEncoder.encode(utilisateur.getPassword()));
             u.setEmail(utilisateur.getEmail());
             return utilisateurRepository.save(u);
         }).orElseThrow(() -> new RuntimeException("Cet utilisateur n'existe pas !"));

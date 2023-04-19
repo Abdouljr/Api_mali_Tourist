@@ -18,9 +18,13 @@ public class Population {
     @Column(length = 10)
     private String date;
 
-    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     @ManyToOne
-    @JoinColumn(name = "region_id")
-    private Region region;
+    @JoinColumn(name = "pays_id")
+    private Pays pays;
+
+    // @JsonProperty(access = JsonProperty.Access.READ_WRITE)
+   // @ManyToOne
+   // @JoinColumn(name = "region_id")
+   // private Region region;
 
 }

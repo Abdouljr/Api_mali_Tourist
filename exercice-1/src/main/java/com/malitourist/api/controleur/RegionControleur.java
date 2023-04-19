@@ -2,6 +2,7 @@ package com.malitourist.api.controleur;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import com.malitourist.api.modele.Population;
@@ -73,17 +74,17 @@ public class RegionControleur {
 	}
 
 	@GetMapping("/afficherAvecPays")
-	Iterable<Object[]> afficher(){
+	List<Region> afficher(){
 		return regionService.afficherAvecPays();
 	}
 
 
 	@ApiOperation(value= "Pour afficher tous les éléments de Région")
 	@GetMapping("/afficherSansPays")
-	Iterable<Object[]> afficherSansPays(){
+	List<Object[]> afficherSansPays(){
 		return regionService.afficherSansPays();
 	}
-	@GetMapping("/Tout")
+	@GetMapping("/tout")
 	public Iterable<Object[]> togetall() {
 		return regionService.togetall();
 
